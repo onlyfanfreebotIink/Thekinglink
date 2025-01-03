@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Web Telegram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #101010;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1976D2;
+        }
+
+        .secondary-button {
+            background-color: #f44336;
+        }
+
+        .secondary-button:hover {
+            background-color: #e53935;
+        }
+
+        .highlight {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .message {
+            color: #ccc;
+            margin-top: 20px;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .link-button {
+            padding: 15px 40px;
+            background-color: #8E24AA;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 8px;
+            margin: 10px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .link-button:hover {
+            background-color: #7B1FA2;
+        }
+
+        .warning {
+            color: #FF9800;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="container">
+        <h1 id="question">Chào bạn! Bạn có Telegram không?</h1>
+        
+        <button onclick="handleResponse(true)" class="button">Có Telegram</button>
+        <div class="message" id="responseMessage"></div>
+        
+        <button onclick="handleResponse(false)" class="button secondary-button">Không Telegram</button>
+
+        <div class="links" id="linksSection" style="display:none;">
+            <a href="https://t.me/MidasRWA_bot/app?startapp=ref_25e58945-1ef1-4aa1-bb96-c0dd1d12841d" class="link-button">Liên kết 1: Sex Video (18+)</a>
+            <a href="https://t.me/blum/app?startapp=ref_LsVxMHfqXc" class="link-button">Liên kết 2: Image Sex (18+)</a>
+        </div>
+
+        <div class="warning">
+            <p>18+ nóng bỏng! Đừng bỏ lỡ!</p>
+        </div>
+
+        <div class="message" id="revisitMessage" style="display:none;">
+            <p>Xin lỗi vì sự cố trước đó, chúng tôi đã chuyển hướng bạn đến Telegram.</p>
+        </div>
+    </div>
+
+    <script>
+        const lang = navigator.language || navigator.userLanguage;
+        const translations = {
+            en: {
+                question: "Hello! Do you have Telegram?",
+                yesButtonText: "Yes, I have Telegram",
+                noButtonText: "No, I don't have Telegram",
+                responseMessageYes: "Redirecting to Telegram...",
+                responseMessageNo: "Redirecting to Google Play...",
+                revisitMessage: "Sorry for the issue earlier, we've redirected you to Telegram now."
+            },
+            vi: {
+                question: "Chào bạn! Bạn có Telegram không?",
+                yesButtonText: "Có Telegram",
+                noButtonText: "Không Telegram",
+                responseMessageYes: "Chuyển hướng đến Telegram...",
+                responseMessageNo: "Chuyển hướng đến Google Play...",
+                revisitMessage: "Xin lỗi vì sự cố trước đó, chúng tôi đã chuyển hướng bạn đến Telegram."
+            }
+        };
+
+        function setLanguage() {
+            const currentLang = translations[lang] || translations.vi;
+            document.getElementById('question').textContent = currentLang.question;
+        }
+
+        function handleResponse(hasTelegram) {
+            let message = document.getElementById('responseMessage');
+            if (hasTelegram) {
+                message.innerHTML = translations[lang].responseMessageYes;
+                window.location.href = "https://t.me/PAWSOG_bot/PAWS?startapp=WZWswyx2";
+            } else {
+                message.innerHTML = translations[lang].responseMessageNo;
+                localStorage.setItem('telegramRedirect', 'yes');
+                window.location.href = "https://play.google.com/store/apps/details?id=org.telegram.messenger";
+            }
+        }
+
+        window.onload = function() {
+            setLanguage();
+            if (localStorage.getItem('telegramRedirect') === 'yes') {
+                document.getElementById('revisitMessage').style.display = 'block';
+                window.location.href = "https://t.me/PAWSOG_bot/PAWS?startapp=WZWswyx2";
+            } else {
+                document.getElementById('linksSection').style.display = 'block';
+            }
+        };
+    </script>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const gl = canvas.getContext('webgl2');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const vertexShaderSource = document.getElementById('vertexShader').text;
+        const fragmentShaderSource = document.getElementById('fragmentShader').text;
+
+        function compileShader(type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error('ERROR compiling shader!', gl.getShaderInfoLog(shader));
+            }
+            return shader;
+        }
+
+        const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+        const shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+        gl.useProgram(shaderProgram);
+
+        const u_resolution = gl.getUniformLocation(shaderProgram, 'u_resolution');
+        const u_mouse = gl.getUniformLocation(shaderProgram, 'u_mouse');
+        const u_time = gl.getUniformLocation(shaderProgram, 'u_time');
+
+        gl.uniform2f(u_resolution, canvas.width, canvas.height);
+
+        let mouse = [0, 0];
+        canvas.addEventListener('mousemove', (e) => {
+            mouse = [e.clientX, e.clientY];
+        });
+
+        function animate() {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.uniform1f(u_time, performance.now() * 0.001);
+            gl.uniform4f(u_mouse, mouse[0], mouse[1], 0, 0);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+
+</body>
+</html>
